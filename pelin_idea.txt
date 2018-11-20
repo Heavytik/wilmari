@@ -1,0 +1,39 @@
+
+Päällimmäinen idea on edetä yläkoulu läpi väistellen ja 
+keräten tuntimerkintöjä. Hyvät tuntimerkinnät lisäävät pisteitä
+ja huonot tuntimerkinnät vähentävät pisteitä.
+
+Ajoittain kentälle ilmestyy koe, joka täytyy poimia. Jos koe
+jää poimimatta, kokeen arvosana on 4/hylätty. Kokeessa on arvosana
+valmiina, arvosana perustuu kulloiseenkin pistetilanteeseen. Näin
+siis oppilas voi vaikuttaa omaan opiskeluunsa keräämällä hyviä
+tuntimerkintöjä.
+
+Peli jakautuu kolmeen kenttään. Ensimmäisessä kentässä ollan 
+7lk:lla. Siirryttäessä seuraaville luokille, huonojen
+merkintöjen osuus ja "huonous" kasvaa (esim. lintsaaminen lisääntyy ysillä).
+
+Hyvät:
+Myönteinen asenne +1
+Otit toiset huomioon +1
+Ahkeraa työskentelyä +2
+Positiivinen muutos koulutyöskentelyssä +2
+Otit vastuuta opiskelustasi +2
+Aktiivinen osallistuminen +2
+
+Huonot:
+Opiskeluvälineet puuttuvat -1
+Häiritsee työrauhaa -1
+Kotitehtävät tekemättä -2
+Koulun sääntöjen rikkominen -2
+Tupakointi kouluaikana -2
+Ei osallistu opiskeluun -3
+Luvaton poissaolo -4
+
+Peli on todella yksinkertanen. Siihen voisi saada lisättyä useita
+pikkuominaisuuksia helpostikin. Toisaalta isojakin muutoksia oli mielessä, mutta
+yksinkertaisuus oli valttia tällä kertaa.
+
+Pieniä virheitäkin työhön jäi. Esim. punainen ja vihreä eivät ole hyvä pari
+tekstien väreiksi. Värisokeille voi aiheuttaa hankaluuksia. Tausta on ehkä hiukan
+liian tumma. Peli loppuminen hiukan ontuu, olisi hyvä jos kaikki pysähtyisivät. jne...

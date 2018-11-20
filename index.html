@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Wilmari</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+      body {
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+      
+      var config = {
+        type: Phaser.AUTO,
+        height: 684,
+        physics: {
+          default: 'arcade',
+          arcade: {
+            gravity: {
+              y: 300 
+            },
+            debug: false
+          }
+        },
+        scene: {
+          preload: preload,
+          create: create,
+          update: update
+        }
+      };
+
+      var player;
+      var cursors;
+      var score = 40;
+      var grade;
+      var gameOver = false;
+      var scoreText;
+      var gradeText;
+      var examText;
+      var test;
+      var ahkeraa;
+      var eiosallistu;
+      var opiskeluvalineet;
+      var music;
+      var exam;
+      var endText;
+
+      var game = new Phaser.Game(config);
+
+      function preload() {
+        this.load.image('background', "assets/background.png");
+        this.load.image('hahmo', "assets/hahmo.png");
+        this.load.image('eiosallistu', 'assets/eiosallistu.png');
+        this.load.image('opiskeluvalineet', 'assets/opiskeluvalineet.png')
+        this.load.image('ahkeraa', 'assets/ahkeraa.png');
+        this.load.image('asenne', 'assets/asenne.png');
+        this.load.image('exam', 'assets/exam.png')
+
+        this.load.audio('audio', 'assets/audio/background_audio.wav');
+      }
+
+      function create() {
+
+        this.cameras.main.setBounds(0, 0, 3200, 684);
+        this.physics.world.setBounds(0, 0, 3200, 684);
+
+        this.add.image(800, 342, 'background');
+        this.add.image(2400, 342, 'background');
+
+        music = this.sound.add('audio');
+        music.loop = true;
+        music.play();
+
+        // players properties
+
+        player = this.physics.add.sprite(20, 100, 'hahmo');
+
+        player.setBounce(0.2);
+        player.setCollideWorldBounds(true);
+        player.setVelocityX(60);
+
+        // texts -------------------------------------------------------------------
+
+        eiosallistu = this.physics.add.group({
+          key: 'eiosallistu',
+          repeat: 50,
+          setXY: {x: 300, y: 20 + Math.floor( Math.random() * 620), stepX: 450}
+        });
+        eiosallistu.children.iterate(child => initGroup(child));
+
+        opiskeluvalineet = this.physics.add.group({
+          key: 'opiskeluvalineet',
+          repeat: 50,
+          setXY: {x: 330, y: 20 + Math.floor( Math.random() * 620), stepX: 400}
+        });
+        opiskeluvalineet.children.iterate(child => initGroup(child));
+
+        ahkeraa = this.physics.add.group({
+          key: 'ahkeraa',
+          repeat: 50,
+          setXY: {x: 150, y: 20 + Math.floor( Math.random() * 620), stepX: 930}
+        });
+        ahkeraa.children.iterate(child => initGroup(child));
+
+        asenne = this.physics.add.group({
+          key: 'asenne',
+          repeat: 50,
+          setXY: {x: 250, y: 20 + Math.floor( Math.random() * 620), stepX: 650}
+        });
+        asenne.children.iterate(child => initGroup(child));
+        
+        this.physics.add.overlap(player, eiosallistu, hitText(-3), null, this);
+        this.physics.add.overlap(player, opiskeluvalineet, hitText(-2), null, this);
+        this.physics.add.overlap(player, ahkeraa, hitText(2), null, this);
+        this.physics.add.overlap(player, asenne, hitText(1), null, this);
+
+        // ---------------------------------------------------------------------------
+
+        // exam
+
+        /* var rect = new Phaser.Geom.Rectangle(2900, 20 + Math.floor( Math.random() * 580), 75, 100);
+        var graphics = this.add.graphics({ fillStyle: { color: 0xcccccc } });
+        graphics.fillRectShape(rect); */
+
+        exam = this.physics.add.sprite(2900, 300, 'exam');
+        exam.body.allowGravity = false;
+
+        this.physics.add.overlap(player, exam, hitExam, null, this)
+      
+        cursors = this.input.keyboard.createCursorKeys();
+
+        examText = this.add.text(exam.x -30, exam.y -30, "KOE\nmatematiikka\narvosana:\n10", {
+          fontSize: "12px",
+          fill: "#000"
+        });
+
+        endText = this.add.text(2350, 500, "Demo päättyi. Sait arvosanaksi numeron 10" , {
+          fontSize: "32px",
+          fill: "#fff"
+        });
+        endText.visible = false;
+
+        scoreText = this.add.text(16, 16, "pisteet: " + score, {
+          fontSize: "32px",
+          fill: "#fff"
+        });
+        scoreText.setScrollFactor(0);
+
+        gradeText = this.add.text(260, 16, "tuleva koe: 4", {
+          fontSize: "32px",
+          fill: "#fff"
+        });
+        gradeText.setScrollFactor(0);
+        
+        this.cameras.main.startFollow(player);
+
+        this.cameras.main.followOffset.set(-200, 0);
+
+      }
+
+      function update() {
+        if (gameOver) {
+          return;
+        }
+
+        if (cursors.left.isDown) {
+          player.setVelocityX(30);
+        } else if (cursors.right.isDown) {
+          player.setVelocityX(160);
+        } else {
+          player.setVelocityX(60);
+        }
+
+        if (cursors.up.isDown){
+          player.setVelocityY(-300);
+        }
+        
+        grade = Math.max(4, Math.min( 4 + Math.floor(score / 10) , 10));
+        gradeText.setText('tuleva koe: ' + grade);
+        examText.setText('KOE\narvosana:\n' + grade);
+        endText.setText('Demo päättyi. Sait arvosanaksi numeron ' + grade);
+
+      }
+
+      function hitText(initialPoints) {
+        return(
+          function calculatePoints(player, text) {
+            text.disableBody(true, true);
+            score += initialPoints;
+            scoreText.setText('pisteet: ' + score);
+          }
+        )
+      }
+
+      function initGroup(child) {
+        child.setY(20 + Math.floor( Math.random() * 620));
+        child.setVelocityX(-300);
+        child.body.allowGravity = false;
+      }
+
+      function randomHeight(maxDepth) {
+        20 + Math.floor( Math.random() * maxDepth);
+      }
+
+      function hitExam(player, exam) {
+        exam.disableBody(true, true);
+        examText.visible = false;
+        endText.visible = true;
+        music.destroy();
+        gameOver = true;
+      }
+
+    </script>
+  </body>
+</html>
