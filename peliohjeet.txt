@@ -1,0 +1,12 @@
+
+Kerää wilmamerkintöjä ja lopuksi koe.
+
+Saat hyvistä wilmamerkinnöistä pisteitä ja huonot merkinnät
+laskevat pisteitä. Pisteiden määrä vaikuttaa tulevan kokeen
+arvosanaan.
+
+Hahmo liikkuu nuolinäppäimistä. Perustoiminto on ylöspäin hyppy.
+Hahmoa voi aavistuksen myös hidastaa vasemmalla nuolinäppäimellä ja
+nopeuttaa oikealla nuolinäppäimellä.
+
+Demoversio loppuu, kun olet kerännyt ensimmäisen kokeen.
